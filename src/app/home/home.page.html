@@ -1,20 +1,94 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SkeletonAPP</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="home-container">
+    <h2 class="ion-text-center">Bienvenido!</h2>
+    <p class="ion-text-center">Usuario: {{ username }}</p>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <br>
+
+    <h5 class="ion-text-center">Información Adicional</h5>
+
+    <br>
+
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="nombre" type="text" placeholder="Ingrese Nombre" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Apellido</ion-label>
+      <ion-input [(ngModel)]="apellido" type="text" placeholder="Ingrese Apellido" required></ion-input>
+    </ion-item>
+
+    <!-- Combobox para Nivel de Educación -->
+    <ion-item>
+      <ion-label position="stacked">Nivel Educación</ion-label>
+      <ion-select [(ngModel)]="nivelEducacion" placeholder="Seleccione Nivel" interface="popover">
+        <ion-select-option value="primaria">Primaria</ion-select-option>
+        <ion-select-option value="secundaria">Secundaria</ion-select-option>
+        <ion-select-option value="universidad">Universidad</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Fecha Nacimiento</ion-label>
+      <ion-input [(ngModel)]="fechaNacimiento" type="text" placeholder="dd/mm/aaaa"></ion-input>
+      <ion-button fill="clear" slot="end" (click)="abrirModalCalendario()">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Botones para Limpiar y Mostrar Información -->
+    <div class="button-group">
+      <ion-button expand="block" color="medium" (click)="limpiarCampos()">Limpiar</ion-button>
+      <ion-button expand="block" color="primary" (click)="mostrarInformacion()">Mostrar</ion-button>
+    </div>
   </div>
 </ion-content>
+
+<!-- Modal para el Calendario -->
+<ion-modal [isOpen]="mostrarCalendario" (ionModalDidDismiss)="cerrarModalCalendario()" cssClass="custom-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Seleccione Fecha</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModalCalendario()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <!-- Cierre correcto del componente ion-datetime -->
+      <ion-datetime
+        [(ngModel)]="fechaTemporal"
+        display-format="DD/MM/YYYY"
+        placeholder="Seleccione Fecha"
+        presentation="date"
+        color="dark">
+      </ion-datetime>
+    </ion-content>
+
+    <!-- Botones para Cancelar y Aceptar -->
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModalCalendario()">Cancelar</ion-button>
+          <ion-button (click)="confirmarFechaSeleccionada()">Aceptar</ion-button> <!-- Botón Aceptar -->
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
+
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">App desarrollada por los Teletubis</ion-title>
+  </ion-toolbar>
+</ion-footer>

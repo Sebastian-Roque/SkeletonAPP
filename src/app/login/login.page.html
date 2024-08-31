@@ -1,0 +1,52 @@
+<ion-content class="ion-padding">
+  <div class="header-content">
+    <h1 class="ion-text-center">SkeletonApp</h1>
+    <h6 class="ion-text-center">Aquí comienza todo</h6>
+  </div>
+
+  <br><br><br><br>
+  <br><br><br>
+
+  <div class="login-container">
+    <h2 class="ion-text-center">Bienvenido!</h2>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Usuario</ion-label>
+      <ion-input 
+        type="text" 
+        maxlength="8" 
+        minlength="3" 
+        required 
+        [(ngModel)]="username" 
+        pattern="[a-zA-Z0-9]*"
+        #usernameInput="ngModel">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+      <p class="ion-padding-start">Usuario debe ser alfanumérico y tener entre 3 y 8 caracteres.</p>
+    </ion-text>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input 
+        type="password" 
+        maxlength="4" 
+        required 
+        [(ngModel)]="password" 
+        pattern="[0-9]*"
+        #passwordInput="ngModel">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="passwordInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+      <p class="ion-padding-start">Contraseña debe ser numérica de 4 dígitos.</p>
+    </ion-text>
+
+    <ion-button fill="outline" expand="block" (click)="login()" [disabled]="!usernameInput.valid || !passwordInput.valid">
+      Ingresar
+    </ion-button>
+
+    <ion-text class="ion-text-center">
+      <p><a href="#" class="create-account-link">Crea tu cuenta gratis</a></p>
+    </ion-text>
+  </div>
+</ion-content>
