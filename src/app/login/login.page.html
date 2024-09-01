@@ -26,18 +26,21 @@
       <p class="ion-padding-start">Usuario debe ser alfanumérico y tener entre 3 y 8 caracteres.</p>
     </ion-text>
 
-    <ion-item lines="full">
+    <ion-item lines="full" class="password-item">
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input 
-        type="password" 
+        [type]="passwordType" 
         maxlength="4" 
         required 
         [(ngModel)]="password" 
         pattern="[0-9]*"
         #passwordInput="ngModel">
       </ion-input>
+      <ion-button fill="clear" class="toggle-password" (click)="togglePasswordVisibility()">
+        <ion-icon [name]="passwordIcon"></ion-icon>
+      </ion-button>
     </ion-item>
-    <ion-text color="danger" *ngIf="passwordInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+    <ion-text color="danger" *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
       <p class="ion-padding-start">Contraseña debe ser numérica de 4 dígitos.</p>
     </ion-text>
 

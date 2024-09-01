@@ -12,11 +12,9 @@ export class HomePage implements OnInit {
   nombre: string = '';
   apellido: string = '';
   nivelEducacion: string = '';
-  fechaNacimiento: string = ''; // Fecha confirmada
-  fechaTemporal: string = ''; // Fecha seleccionada temporalmente
-  mostrarCalendario: boolean = false;
+  fechaSeleccionada: Date | null = null; // Variable para la fecha seleccionada
 
-  constructor(private alertController: AlertController, private route: ActivatedRoute) { }
+  constructor(private alertController: AlertController, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -24,31 +22,15 @@ export class HomePage implements OnInit {
     });
   }
 
-  abrirModalCalendario() {
-    this.fechaTemporal = this.fechaNacimiento; // Inicializar la fecha temporal con la fecha actual
-    this.mostrarCalendario = true;
-  }
-
-  cerrarModalCalendario() {
-    this.mostrarCalendario = false;
-  }
-
-  confirmarFechaSeleccionada() {
-    const [datePart] = this.fechaTemporal.split('T');  // Extraer solo la parte de la fecha (YYYY-MM-DD)
-    const [year, month, day] = datePart.split('-');  // Descomponer la fecha en partes
-    this.fechaNacimiento = `${day}/${month}/${year}`;  // Reordenar al formato DD/MM/YYYY
-    this.cerrarModalCalendario(); // Cerrar el modal después de confirmar
-  }
-
   limpiarCampos() {
     this.nombre = '';
     this.apellido = '';
     this.nivelEducacion = '';
-    this.fechaNacimiento = '';
+    this.fechaSeleccionada = null; // Limpiar el campo de fecha
   }
 
   async mostrarInformacion() {
-    if (!this.nombre || !this.apellido || !this.nivelEducacion || !this.fechaNacimiento) {
+    if (!this.nombre || !this.apellido || !this.nivelEducacion || !this.fechaSeleccionada) {
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Por favor, complete todos los campos.',
@@ -59,8 +41,10 @@ export class HomePage implements OnInit {
     }
 
     const alert = await this.alertController.create({
-      header: 'Información del Usuario',
-      message: `Su nombre es: ${this.nombre} ${this.apellido}`,
+      header: 'Usuario',
+      message: `Su nombre es: ${this.nombre} ${this.apellido}
+                Nivel de educación: ${this.nivelEducacion} 
+                Fecha seleccionada: ${this.fechaSeleccionada.toLocaleDateString()}`,
       buttons: ['OK']
     });
 
